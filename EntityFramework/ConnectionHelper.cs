@@ -15,13 +15,13 @@ namespace SVN.Data.EntityFramework
                 UserID = model.UserID,
                 Password = model.Password,
                 MultipleActiveResultSets = true,
-                ApplicationName = "EntityFramework"
+                ApplicationName = "EntityFramework",
             };
             var efBuilder = new EntityConnectionStringBuilder
             {
                 Metadata = model.Metadata,
                 Provider = "System.Data.SqlClient",
-                ProviderConnectionString = sqlBuilder.ConnectionString
+                ProviderConnectionString = sqlBuilder.ConnectionString,
             };
             return efBuilder.ConnectionString;
         }
