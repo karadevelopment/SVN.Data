@@ -1,6 +1,7 @@
 ﻿using SVN.Core.Time;
 using SVN.Reflection;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
@@ -19,6 +20,34 @@ namespace SVN.Data.EntityFramework
             where T : class
         {
             param.RemoveRange(param.Where(predicate));
+        }
+
+        public static List<TDestination> Map<TSource, TDestination>(this IQueryable<TSource> s, bool includeDefaults = false)
+            where TSource : class
+            where TDestination : class, new()
+        {
+            return s.Select(x => x.Map<TSource, TDestination>(includeDefaults)).ToList();
+        }
+
+        public static List<TDestination> Map<TSource, TDestination>(this ICollection<TSource> s, bool includeDefaults = false)
+            where TSource : class
+            where TDestination : class, new()
+        {
+            return s.Select(x => x.Map<TSource, TDestination>(includeDefaults)).ToList();
+        }
+
+        public static List<TDestination> Map<TSource, TDestination>(this IEnumerable<TSource> s, bool includeDefaults = false)
+            where TSource : class
+            where TDestination : class, new()
+        {
+            return s.Select(x => x.Map<TSource, TDestination>(includeDefaults)).ToList();
+        }
+
+        public static List<TDestination> Map<TSource, TDestination>(this IOrderedEnumerable<TSource> s, bool includeDefaults = false)
+            where TSource : class
+            where TDestination : class, new()
+        {
+            return s.Select(x => x.Map<TSource, TDestination>(includeDefaults)).ToList();
         }
 
         public static TDestination Map<TSource, TDestination>(this TSource s, bool includeDefaults = false)
