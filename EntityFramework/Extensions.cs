@@ -81,6 +81,16 @@ namespace SVN.Data.EntityFramework
                     var sValue = sProperty.GetValue(s);
                     if (includeDefaults || sValue != null && sValue != sProperty.PropertyType.GetDefault()) dProperty.SetValue(d, sValue);
                 }
+                else if (sProperty.PropertyType == typeof(int?) && dProperty.PropertyType == typeof(int))
+                {
+                    var sValue = (int?)sProperty.GetValue(s);
+                    if (sValue.HasValue) dProperty.SetValue(d, sValue.Value);
+                }
+                else if (sProperty.PropertyType == typeof(int) && dProperty.PropertyType == typeof(int?))
+                {
+                    var sValue = (int)sProperty.GetValue(s);
+                    dProperty.SetValue(d, sValue);
+                }
                 else if (sProperty.PropertyType == typeof(DateTime) && dProperty.PropertyType == typeof(long))
                 {
                     var sValue = sProperty.GetValue(s);
